@@ -37,6 +37,12 @@
 					"default": "/data-items/",
 					"description": "Folder of dynapp data items relative to project root"
 				},
+				"dynapp-localization.messagesprefix": {
+					"name": "Message properties prefix",
+					"type": "string",
+					"default": "",
+					"description": "The prefix for message.properties file, example 'dync-register'"
+				},
 				"dynapp-localization.annotationcolor": {
 					"name": "Annotation color",
 					"type": "string",
