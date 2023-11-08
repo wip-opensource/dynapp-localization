@@ -48,6 +48,19 @@
 					"type": "string",
 					"default": "rgba(255, 255, 255, 0.5)",
 					"description": "Color of the text that is places after localized variables"
+				},
+				"dynapp-localization.languagePostfixes": {
+					"name": "language postfixes",
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [
+						"",
+						"sv",
+						"en"
+					],
+					"description": "Language postfixes to use, empty will result in 'messages.properties'. 'sv' will result in messages_sv.properties. Also controls priority of checking "
 				}
 			}
 		}

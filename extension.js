@@ -12,6 +12,14 @@ const path = require('path')
  */
 function activate(context) {
 
+
+	let testCommand = vscode.commands.registerCommand('dynapp-localization.testCommand', (document, range) => {
+		// Code to run when the command is executed
+		console.log(script.getMessagesPaths())
+
+	});
+	context.subscriptions.push(testCommand);
+
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "dynapp-localization" is now active!');
@@ -49,13 +57,14 @@ function activate(context) {
 
 	context.subscriptions.push(vscode.languages.registerHoverProvider({ scheme: 'file' }, {
 		provideHover(document, position, token) {
-			const range = document.getWordRangeAtPosition(position, /%\{(.+)\}/);
+			const range = document.getWordRangeAtPosition(position, /%\{([^\}]+)\}/);
 			if (range) {
 				// Get the word within the range
 				const word = document.getText(range);
-				let variableValue = script.getValueFromMessages(word)
-				if (variableValue) {
-					return new vscode.Hover(`${path.basename(script.getMessagesPath())}: ${variableValue}`);
+				const message =  script.getValueFromMessages(word)
+
+				if (message) {
+					return new vscode.Hover(` ${path.basename(message.file)}: ${message.value}`);
 				}
 			}
 		}
@@ -80,7 +89,7 @@ function activate(context) {
 		let matches = script.getMatchingStrings(document);
 
 		matches.forEach((item) => {
-			var messagesValue = script.getValueFromMessages(item.text) || 'No value found'
+			var messagesValue = script.getValueFromMessages(item.text).value || 'No value found'
 			let decoration = vscode.window.createTextEditorDecorationType({
 				after: {
 					contentText: "." + messagesValue,
