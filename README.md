@@ -1,65 +1,42 @@
-# localization-dynapp README
-
-This is the README for your extension "localization-dynapp". After writing up a brief description, we recommend including the following sections.
+# dynapp-localization README
+The Localize Dynapp extension is designed to work with the DYNAPP platform developed by WIP. It allows users to place text from a JSON file to a messages.properties file for localization. This makes it easier to manage and update localized content in your DYNAPP applications.
 
 ## Features
+Currently the extension has the following features:
+- Command to place current selection in messages file, with user defined key
+- Show the localized value with annotation inline of your code:
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![image of text annotations](image.png)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension requires Visual Studio Code to be installed. You can download it from the official website.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `dynapp-localization.defaultlanguage`: This is the default language extension to use, like 'en', 'sv' or other. Leave blank for `messages.properties`.
+* `dynapp-localization.messagespath`: This is the folder of dynapp data items relative to project root. The default path is `/data-items/`.
+* `dynapp-localization.annotationcolor`: This is the color of the text that is placed after localized variables. The default color is `rgba(255, 255, 255, 0.5)`.
 
-## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Possible improvements
+
+- Currently we dont check if the variable already exists in the messages file. so instead of just adding it should notify the  user and force a new key.
+- Add the ability to edit the value directly from the  preview
+- Check multiple messages files, based on root.json hierarchy
+
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+Create first version of the extension
 
-### 1.0.0
+### 0.1.0
 
-Initial release of ...
+Initial release of Dynapp localization
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
 
 -----------------------------------------------------------------------------------------------------------
 
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
