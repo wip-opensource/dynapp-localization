@@ -25,10 +25,9 @@ This extension contributes the following settings:
 
 ## Possible improvements
 
-- Check multiple messages files, based on root.json hierarchy
 - Automatically find Data item path based on dynappconfig.json file 
 - Currently we dont check if the variable already exists in the messages file. so instead of just adding it should notify the  user and force a new key.
-- Add the ability to edit the value directly from the  preview
+- Add the ability to edit the value directly from the inline notification
 
 ## Release Notes
 
