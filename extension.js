@@ -24,19 +24,6 @@ function activate(context) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "dynapp-localization" is now active!');
 
-	let codeActionDisposable = vscode.languages.registerCodeActionsProvider('*', {
-		provideCodeActions(document, range) {
-			const codeAction = new vscode.CodeAction('Run Command', vscode.CodeActionKind.Empty);
-			codeAction.command = {
-				title: 'Place in messages',
-				command: 'dynapp-localization.placeInMessage',
-				arguments: [document, range],
-			};
-			return [codeAction];
-		}
-	});
-
-	context.subscriptions.push(codeActionDisposable);
 
 	let runCommandDisposable = vscode.commands.registerCommand('dynapp-localization.placeInMessage', (document, range) => {
 		// Code to run when the command is executed
@@ -47,13 +34,25 @@ function activate(context) {
 			const highlighted = editor.document.getText(selectionRange);
 
 			if (highlighted) {
-				script.StartPlaceInMessage(highlighted)
+				script.StartPlaceInMessage(highlighted, selectionRange)
 			}
 		}
 
 	});
+
 	context.subscriptions.push(runCommandDisposable);
 
+	let runCommandDisposable2 = vscode.commands.registerCommand('dynapp-localization.placeRangeInMessage', (document, range) => {
+		// Code to run when the command is executed		
+		if (range) {
+			const highlighted = vscode.window.activeTextEditor.document.getText(range);
+			if (highlighted) {
+				script.StartPlaceInMessage(highlighted, range)
+			}
+		}
+	});
+
+	context.subscriptions.push(runCommandDisposable2);
 
 	context.subscriptions.push(vscode.languages.registerHoverProvider({ scheme: 'file' }, {
 		provideHover(document, position, token) {
@@ -61,7 +60,7 @@ function activate(context) {
 			if (range) {
 				// Get the word within the range
 				const word = document.getText(range);
-				const message =  script.getValueFromMessages(word)
+				const message = script.getValueFromMessages(word)
 
 				if (message) {
 					return new vscode.Hover(` ${path.basename(message.file)}: ${message.value}`);
@@ -74,6 +73,7 @@ function activate(context) {
 	let activeEditor = vscode.window.activeTextEditor;
 	let decorationTypes = []; // Add this line to keep track of all decoration types
 
+	let hardStrings =[]
 	function updateDecorations() {
 		if (!activeEditor) {
 			return;
@@ -87,7 +87,7 @@ function activate(context) {
 
 		let document = activeEditor.document;
 		let matches = script.getMatchingStrings(document);
-
+		//Appending text decoration
 		matches.forEach((item) => {
 			var messagesValue = script.getValueFromMessages(item.text).value || 'No value found'
 			let decoration = vscode.window.createTextEditorDecorationType({
@@ -109,7 +109,40 @@ function activate(context) {
 			// Apply the decoration type to the ranges in the active editor
 			activeEditor.setDecorations(decoration, ranges);
 		})
+
+		hardStrings = script.getUnderlineRanges(document)
+		const yellowUnderline = vscode.window.createTextEditorDecorationType({
+			textDecoration: 'underline yellow dotted',
+		});
+		hardStrings.forEach(element => {
+			decorationTypes.push(yellowUnderline)
+		});
+		activeEditor.setDecorations(yellowUnderline, hardStrings);	
+
 	}
+	
+	class MyCodeActionProvider {
+		provideCodeActions(document, range, context, token) {
+			const codeAction = new vscode.CodeAction('Place in messages', vscode.CodeActionKind.QuickFix);
+			
+			// Check if the cursor is inside one of your ranges
+			for (let myRange of hardStrings) {
+				if (myRange.contains(range.start)) {
+					// If it is, return the code action
+					codeAction.command = {
+						title: 'Place in messages',
+						command: 'dynapp-localization.placeRangeInMessage',
+						arguments: [document, myRange],
+					};
+					return [codeAction];
+				}
+			}
+
+			// If not, return an empty array
+			return [];
+		}
+	}
+	vscode.languages.registerCodeActionsProvider({ scheme: 'file' }, new MyCodeActionProvider());
 
 	let timeout = undefined;
 	function triggerUpdateDecorations(throttle = false) {

@@ -20,7 +20,7 @@
 		"commands": [
 			{
 				"command": "dynapp-localization.placeInMessage",
-				"title": "Place text in messages"
+				"title": "Dynapp: Place text in messages"
 			}
 		],
 		"configuration": {

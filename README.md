@@ -4,6 +4,7 @@ The Localize Dynapp extension is designed to work with the DYNAPP platform devel
 ## Features
 Currently the extension has the following features:
 - Command to place current selection in messages file, with user defined key
+- Highlight none localized strings and show a quick fix for placing them inside messages.properties 
 - Show the localized value with annotation inline of your code:
 
 ![image of text annotations](images/image.png)
