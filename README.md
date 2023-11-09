@@ -32,8 +32,9 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-Create first version of the extension
-
+### 0.1.4
+- Added highlighting of strings that are hard coded, showing quickfix when cursor is inside it. 
+  
 ### 0.1.0
 
 Initial release of Dynapp localization
