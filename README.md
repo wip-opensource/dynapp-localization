@@ -31,6 +31,11 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.1.5
+- Improved string detection to also include itembindings, files with arrays and items
+- ignore image files 
+- ignore attribute bindings
+
 ### 0.1.4
 - Added highlighting of strings that are hard coded, showing quickfix when cursor is inside it. 
   
