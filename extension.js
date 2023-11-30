@@ -121,6 +121,18 @@ function activate(context) {
 
 	}
 	
+	let convertAllStringsDisposable = vscode.commands.registerCommand('dynapp-localization.placeAllStringsInMessages', async function (document, range) {
+		// Code to run when the command is executed
+		const editor = vscode.window.activeTextEditor;
+
+		for (const range of hardStrings) {
+			const highlighted = editor.document.getText(range);
+			await script.PlaceInMessagesAsync(highlighted, range);
+		}
+
+	});
+	context.subscriptions.push(convertAllStringsDisposable);
+
 	class MyCodeActionProvider {
 		provideCodeActions(document, range, context, token) {
 			const codeAction = new vscode.CodeAction('Place in messages', vscode.CodeActionKind.QuickFix);

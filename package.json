@@ -21,6 +21,10 @@
 			{
 				"command": "dynapp-localization.placeInMessage",
 				"title": "Dynapp: Place text in messages"
+			},
+			{
+				"command": "dynapp-localization.placeAllStringsInMessages",
+				"title": "Dynapp: Convert all string to messages"
 			}
 		],
 		"configuration": {
@@ -48,6 +52,12 @@
 					"type": "string",
 					"default": "rgba(255, 255, 255, 0.5)",
 					"description": "Color of the text that is places after localized variables"
+				},
+				"dynapp-localization.prefillvalue": {
+					"name": "Prefill value",
+					"type": "string",
+					"default": "",
+					"description": "Prefill for the key selection dialog"
 				},
 				"dynapp-localization.languagePostfixes": {
 					"name": "language postfixes",
