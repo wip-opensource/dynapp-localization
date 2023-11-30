@@ -124,10 +124,17 @@ function activate(context) {
 	let convertAllStringsDisposable = vscode.commands.registerCommand('dynapp-localization.placeAllStringsInMessages', async function (document, range) {
 		// Code to run when the command is executed
 		const editor = vscode.window.activeTextEditor;
+		if (editor){
+			const document = editor.document;
+			if (document){
 
-		for (const range of hardStrings) {
-			const highlighted = editor.document.getText(range);
-			await script.PlaceInMessagesAsync(highlighted, range);
+				const myhardStrings = script.getUnderlineRanges(document)
+				for (const range of myhardStrings) {
+					const highlighted = editor.document.getText(range);
+
+					await script.PlaceInMessagesAsync(highlighted, range);
+				}
+			}
 		}
 
 	});
