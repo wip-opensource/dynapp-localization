@@ -41,6 +41,12 @@
 					"default": "/data-items/",
 					"description": "Folder of dynapp data items relative to project root"
 				},
+				"dynapp-localization.rootfilename": {
+					"name": "Root file name",
+					"type": "string",
+					"default": "root.json",
+					"description": "The filename of the app root. Should always be root.json, but some apps have data-sources or other"
+				},
 				"dynapp-localization.messagesprefix": {
 					"name": "Message properties prefix",
 					"type": "string",
